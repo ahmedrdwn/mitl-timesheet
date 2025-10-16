@@ -1,0 +1,59 @@
+name: Build Flutter APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.35.6'
+        channel: 'stable'
+        
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Accept Android Licenses
+      run: flutter doctor --android-licenses --verbose
+      
+    - name: Get Flutter dependencies
+      run: flutter pub get
+      working-directory: ./mitl_timesheet_flutter
+      
+    - name: Build APK
+      run: flutter build apk --release
+      working-directory: ./mitl_timesheet_flutter
+      
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: mitl-timesheet-flutter-apk
+        path: mitl_timesheet_flutter/build/app/outputs/flutter-apk/app-release.apk
+        
+    - name: Create Release
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: mitl_timesheet_flutter/build/app/outputs/flutter-apk/app-release.apk
+        name: MITL Timesheet Flutter APK
+        tag_name: v${{ github.run_number }}
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
