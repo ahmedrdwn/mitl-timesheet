@@ -2,6 +2,11 @@
 
 A Flutter version of the MITL Timesheet app for McMaster University students.
 
+## 📱 Latest Build
+- **Version**: 1.0.0+1
+- **Last Updated**: $(date)
+- **Status**: Ready for installation
+
 ## 📱 Features
 
 - **Home Screen**: Overview with total hours, weekly summary, and recent entries
