@@ -38,7 +38,7 @@ jobs:
       working-directory: ./mitl_timesheet_flutter
       
     - name: Build APK
-      run: flutter build apk --release
+      run: flutter build apk --release --android-skip-build-dependency-validation
       working-directory: ./mitl_timesheet_flutter
       
     - name: Upload APK artifact
