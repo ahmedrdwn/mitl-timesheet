@@ -33,9 +33,25 @@ jobs:
     - name: Accept Android Licenses
       run: flutter doctor --android-licenses --verbose
       
+    - name: Clean previous builds
+      run: flutter clean
+      working-directory: ./mitl_timesheet_flutter
+      
     - name: Get Flutter dependencies
       run: flutter pub get
       working-directory: ./mitl_timesheet_flutter
+      
+    - name: Clean Gradle cache
+      run: |
+        cd mitl_timesheet_flutter/android
+        ./gradlew clean
+      
+    - name: Verify Android Gradle Plugin version
+      run: |
+        cd mitl_timesheet_flutter/android
+        echo "Checking Android Gradle Plugin version..."
+        grep -r "com.android.tools.build:gradle" . || echo "Not found in build.gradle"
+        grep -r "com.android.application.*version" settings.gradle || echo "Not found in settings.gradle"
       
     - name: Build APK
       run: flutter build apk --release --android-skip-build-dependency-validation
