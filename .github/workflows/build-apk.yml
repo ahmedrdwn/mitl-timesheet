@@ -41,6 +41,10 @@ jobs:
       run: flutter pub get
       working-directory: ./mitl_timesheet_flutter
       
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+      working-directory: ./mitl_timesheet_flutter/android
+      
     - name: Clean Gradle cache
       run: |
         cd mitl_timesheet_flutter/android
