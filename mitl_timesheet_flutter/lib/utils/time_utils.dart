@@ -31,10 +31,10 @@ class TimeUtils {
       return entryDate.isAfter(weekStart) || entryDate.isAtSameMomentAs(weekStart);
     }).toList();
     
-    return thisWeekEntries.fold(0.0, (sum, entry) => sum + double.tryParse(entry.hours) ?? 0);
+    return thisWeekEntries.fold(0.0, (sum, entry) => sum + (double.tryParse(entry.hours) ?? 0.0));
   }
 
   static double getTotalHours(List<TimesheetEntry> entries) {
-    return entries.fold(0.0, (sum, entry) => sum + double.tryParse(entry.hours) ?? 0);
+    return entries.fold(0.0, (sum, entry) => sum + (double.tryParse(entry.hours) ?? 0.0));
   }
 }

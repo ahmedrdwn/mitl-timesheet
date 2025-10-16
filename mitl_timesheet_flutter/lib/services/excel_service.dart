@@ -18,9 +18,9 @@ class ExcelService {
     final sheet = excel['Timesheet'];
 
     // Header information
-    sheet.cell(CellIndex.indexByString('A1')).value = const TextCellValue('McMaster University');
-    sheet.cell(CellIndex.indexByString('A2')).value = const TextCellValue('Manufacturing Innovation Technology Lab (MITL)');
-    sheet.cell(CellIndex.indexByString('A3')).value = const TextCellValue('Student Employee Timesheet');
+    sheet.cell(CellIndex.indexByString('A1')).value = TextCellValue('McMaster University');
+    sheet.cell(CellIndex.indexByString('A2')).value = TextCellValue('Manufacturing Innovation Technology Lab (MITL)');
+    sheet.cell(CellIndex.indexByString('A3')).value = TextCellValue('Student Employee Timesheet');
     sheet.cell(CellIndex.indexByString('A5')).value = TextCellValue('Student Name: ${employeeName.isEmpty ? 'N/A' : employeeName}');
     sheet.cell(CellIndex.indexByString('A6')).value = TextCellValue('Student Number: ${studentNumber.isEmpty ? 'N/A' : studentNumber}');
     
@@ -51,19 +51,19 @@ class ExcelService {
     }
 
     // Total hours
-    final totalHours = entries.fold(0.0, (sum, entry) => sum + (double.tryParse(entry.hours) ?? 0));
+    final totalHours = entries.fold(0.0, (sum, entry) => sum + (double.tryParse(entry.hours) ?? 0.0));
     final totalRowIndex = 11 + entries.length + 1;
-    sheet.cell(CellIndex.indexByString('F$totalRowIndex')).value = const TextCellValue('TOTAL HOURS:');
+    sheet.cell(CellIndex.indexByString('F$totalRowIndex')).value = TextCellValue('TOTAL HOURS:');
     sheet.cell(CellIndex.indexByString('G$totalRowIndex')).value = TextCellValue(totalHours.toStringAsFixed(2));
 
     // Signatures
     final signatureRowIndex = totalRowIndex + 2;
-    sheet.cell(CellIndex.indexByString('A$signatureRowIndex')).value = const TextCellValue('Student Signature: _________________________');
-    sheet.cell(CellIndex.indexByString('E$signatureRowIndex')).value = const TextCellValue('Date: _________________________');
+    sheet.cell(CellIndex.indexByString('A$signatureRowIndex')).value = TextCellValue('Student Signature: _________________________');
+    sheet.cell(CellIndex.indexByString('E$signatureRowIndex')).value = TextCellValue('Date: _________________________');
     
     final supervisorRowIndex = signatureRowIndex + 1;
-    sheet.cell(CellIndex.indexByString('A$supervisorRowIndex')).value = const TextCellValue('Supervisor Signature: _________________________');
-    sheet.cell(CellIndex.indexByString('E$supervisorRowIndex')).value = const TextCellValue('Date: _________________________');
+    sheet.cell(CellIndex.indexByString('A$supervisorRowIndex')).value = TextCellValue('Supervisor Signature: _________________________');
+    sheet.cell(CellIndex.indexByString('E$supervisorRowIndex')).value = TextCellValue('Date: _________________________');
 
     // Save file
     final directory = await getApplicationDocumentsDirectory();
