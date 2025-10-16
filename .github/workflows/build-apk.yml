@@ -45,6 +45,18 @@ jobs:
       run: chmod +x ./gradlew
       working-directory: ./mitl_timesheet_flutter/android
       
+    - name: Set Gradle Heap Size
+      run: |
+        echo "GRADLE_OPTS=-Xmx4g -XX:MaxMetaspaceSize=512m" >> $GITHUB_ENV
+        echo "GRADLE_DAEMON_OPTS=-Xmx4g -XX:MaxMetaspaceSize=512m" >> $GITHUB_ENV
+        
+    - name: Configure Gradle Properties
+      run: |
+        cd mitl_timesheet_flutter/android
+        echo "org.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=512m" >> gradle.properties
+        echo "org.gradle.parallel=true" >> gradle.properties
+        echo "org.gradle.caching=true" >> gradle.properties
+      
     - name: Clean Gradle cache
       run: |
         cd mitl_timesheet_flutter/android
