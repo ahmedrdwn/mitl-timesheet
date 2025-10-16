@@ -79,7 +79,7 @@ jobs:
         name: mitl-timesheet-flutter-apk
         path: mitl_timesheet_flutter/build/app/outputs/flutter-apk/app-release.apk
         
-    - name: Create Release
+    - name: Create Release (if GH_PAT is available)
       if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
       uses: softprops/action-gh-release@v1
       with:
@@ -89,3 +89,4 @@ jobs:
         generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+      continue-on-error: true
